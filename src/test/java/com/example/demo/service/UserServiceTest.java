@@ -19,7 +19,6 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Можно добавить очистку, если потребуется
     }
 
     @Test
@@ -45,7 +44,7 @@ class UserServiceTest {
         User user = new User(null, "dup", "123", false);
         userService.register(user);
         User user2 = new User(null, "dup", "123", false);
-        userService.register(user2); // В текущей логике дубликаты не блокируются, но можно добавить проверку
+        userService.register(user2);
         long count = userService.findAll().stream().filter(u -> u.getUsername().equals("dup")).count();
         assertTrue(count >= 1);
     }
