@@ -3,31 +3,26 @@ package com.example.demo.service.impl;
 import com.example.demo.model.Task;
 import com.example.demo.model.TaskStatus;
 import com.example.demo.repository.JpaTaskRepository;
-import com.example.demo.repository.TaskRepository;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Profile("inmemory")
-public class TaskServiceImpl implements TaskService {
-    private final TaskRepository taskRepository;
+@Profile("h2")
+public class H2TaskServiceImpl implements TaskService {
+    private final JpaTaskRepository taskRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public H2TaskServiceImpl(JpaTaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
     @Override
     public Task createTask(Task task) {
-        task.setCreationDate(LocalDateTime.now());
-        if (task.getStatus() == null) task.setStatus(TaskStatus.PENDING);
-        task.setDeleted(false);
         return taskRepository.save(task);
     }
 
@@ -38,12 +33,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getPendingTasks(Long userId) {
-        return taskRepository.findByUserIdAndPending(userId);
+        return taskRepository.findByUserIdAndStatus(userId, TaskStatus.PENDING);
     }
 
     @Override
     public void deleteTask(Long taskId) {
-        taskRepository.markDeleted(taskId);
+        Optional<Task> taskOpt = taskRepository.findById(taskId);
+        taskOpt.ifPresent(task -> {
+            task.setDeleted(true);
+            taskRepository.save(task);
+        });
     }
 
     @Override

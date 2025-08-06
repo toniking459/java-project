@@ -2,30 +2,26 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Notification;
 import com.example.demo.repository.JpaNotificationRepository;
-import com.example.demo.repository.NotificationRepository;
 import com.example.demo.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Profile("inmemory")
-public class NotificationServiceImpl implements NotificationService {
-    private final NotificationRepository notificationRepository;
+@Profile("h2")
+public class H2NotificationServiceImpl implements NotificationService {
+    private final JpaNotificationRepository notificationRepository;
 
     @Autowired
-    public NotificationServiceImpl(NotificationRepository notificationRepository) {
+    public H2NotificationServiceImpl(JpaNotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
 
     @Override
     public Notification createNotification(Notification notification) {
-        notification.setCreationDate(LocalDateTime.now());
-        notification.setDeleted(false);
         return notificationRepository.save(notification);
     }
 
@@ -36,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> getPendingNotifications(Long userId) {
-        return notificationRepository.findByUserIdAndPending(userId);
+        return notificationRepository.findByUserIdAndReadFalse(userId);
     }
 
     @Override
