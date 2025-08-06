@@ -24,16 +24,20 @@ public class Notification {
     
     @Column(nullable = false)
     private boolean deleted = false;
+    
+    @Column
+    private String type;
 
     public Notification() {}
 
-    public Notification(Long id, Long userId, String message, LocalDateTime creationDate, boolean read, boolean deleted) {
+    public Notification(Long id, Long userId, String message, LocalDateTime creationDate, boolean read, boolean deleted, String type) {
         this.id = id;
         this.userId = userId;
         this.message = message;
         this.creationDate = creationDate;
         this.read = read;
         this.deleted = deleted;
+        this.type = type;
     }
 
 
@@ -49,4 +53,6 @@ public class Notification {
     public void setRead(boolean read) { this.read = read; }
     public boolean isDeleted() { return deleted; }
     public void setDeleted(boolean deleted) { this.deleted = deleted; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 } 
