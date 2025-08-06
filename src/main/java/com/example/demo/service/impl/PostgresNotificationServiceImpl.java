@@ -22,7 +22,7 @@ public class PostgresNotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification createNotification(Notification notification) {
-        return notificationRepository.save(notification);
+        throw new UnsupportedOperationException("Notifications can only be created through message broker events");
     }
 
     @Override
