@@ -63,9 +63,11 @@ public class InMemoryTaskRepository implements TaskRepository {
         if (t != null) t.setDeleted(true);
     }
 
+
     @Override
     public void clear() {
         tasks.clear();
         idGen.set(1);
     }
+
 } 

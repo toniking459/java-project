@@ -56,9 +56,11 @@ public class InMemoryNotificationRepository implements NotificationRepository {
         return result;
     }
 
+
     @Override
     public void clear() {
         notifications.clear();
         idGen.set(1);
     }
+
 } 
