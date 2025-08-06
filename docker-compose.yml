@@ -21,6 +21,20 @@ services:
     networks:
       - demo-network
 
+  memcached:
+    image: memcached:1.6-alpine
+    container_name: demo_memcached
+    ports:
+      - "11211:11211"
+    command: memcached -m 128
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "11211"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - demo-network
+
 volumes:
   postgres_data:
 
