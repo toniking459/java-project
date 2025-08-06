@@ -2,5 +2,6 @@ package com.example.demo.model;
 
 public enum TaskStatus {
     PENDING,
-    COMPLETED
+    COMPLETED,
+    OVERDUE
 } 

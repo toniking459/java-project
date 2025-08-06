@@ -1,4 +1,4 @@
--- Create users table
+
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
@@ -6,7 +6,7 @@ CREATE TABLE users (
     deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- Create tasks table
+
 CREATE TABLE tasks (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE tasks (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Create notifications table
+
 CREATE TABLE notifications (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE notifications (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Create indexes for better performance
+
 CREATE INDEX idx_tasks_user_id ON tasks(user_id);
 CREATE INDEX idx_tasks_deleted ON tasks(deleted);
 CREATE INDEX idx_tasks_status ON tasks(status);

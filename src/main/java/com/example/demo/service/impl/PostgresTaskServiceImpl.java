@@ -71,7 +71,6 @@ public class PostgresTaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "task", key = "#id")
     public Optional<Task> findById(Long id) {
         return taskRepository.findByIdAndDeletedFalse(id);
     }
