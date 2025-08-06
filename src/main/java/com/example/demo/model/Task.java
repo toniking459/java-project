@@ -4,16 +4,32 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name = "user_id", nullable = false)
     private Long userId;
+    
+    @Column(nullable = false)
     private String title;
+    
+    @Column(columnDefinition = "TEXT")
     private String description;
+    
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
+    
+    @Column(name = "target_date")
     private LocalDateTime targetDate;
-    private boolean deleted;
+    
+    @Column(nullable = false)
+    private boolean deleted = false;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TaskStatus status;
 
     public Task() {}
@@ -28,6 +44,7 @@ public class Task {
         this.deleted = deleted;
         this.status = status;
     }
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

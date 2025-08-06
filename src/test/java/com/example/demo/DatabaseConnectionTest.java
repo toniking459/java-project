@@ -6,10 +6,10 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class DemoApplicationTests {
+class DatabaseConnectionTest {
 
-	@Test
-	void contextLoads() {
-	}
-
-}
+    @Test
+    void contextLoads() {
+        
+    }
+} 
