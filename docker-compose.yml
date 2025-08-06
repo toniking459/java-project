@@ -1,38 +1,29 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
+  postgres:
+    image: postgres:15
+    container_name: demo_postgres
     environment:
-      - SPRING_PROFILES_ACTIVE=h2
-      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
-      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.h2.Driver
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=
-      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
-      - SPRING_H2_CONSOLE_ENABLED=true
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    depends_on:
-      - h2-console
-    networks:
-      - app-network
-
-  h2-console:
-    image: oscarfonts/h2
+      POSTGRES_DB: demo_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - "8082:81"
-    environment:
-      - H2_OPTIONS=-ifNotExists
+      - "5434:5432"
     volumes:
-      - h2-data:/h2-data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
-      - app-network
+      - demo-network
 
 volumes:
-  h2-data:
+  postgres_data:
 
 networks:
-  app-network:
+  demo-network:
     driver: bridge 

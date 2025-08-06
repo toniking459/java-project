@@ -3,14 +3,20 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(unique = true, nullable = false)
     private String username;
+    
+    @Column(nullable = false)
     private String password;
-    private boolean deleted;
+    
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     public User() {}
 
@@ -20,6 +26,7 @@ public class User {
         this.password = password;
         this.deleted = deleted;
     }
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
