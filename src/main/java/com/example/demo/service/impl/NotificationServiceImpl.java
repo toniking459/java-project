@@ -26,6 +26,15 @@ public class NotificationServiceImpl implements NotificationService {
     public Notification createNotification(Notification notification) {
         notification.setCreationDate(LocalDateTime.now());
         notification.setDeleted(false);
+<<<<<<< HEAD
+=======
+
+        // Не перезаписываем read, если оно уже задано
+        // Если notification.isRead() == false по умолчанию, оставляем как есть
+
+        notification.setRead(false);
+
+>>>>>>> 8cee96d572f14ab4cf4a23753eb4c48803472306
         return notificationRepository.save(notification);
     }
 

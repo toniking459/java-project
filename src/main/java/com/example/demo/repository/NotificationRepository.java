@@ -14,5 +14,8 @@ public interface NotificationRepository {
     List<Notification> findByUserId(Long userId);
     List<Notification> findByUserIdAndPending(Long userId);
     List<Notification> findAll();
+
     void clear();
+
+
 } 

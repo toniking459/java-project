@@ -15,5 +15,8 @@ public interface TaskRepository {
     List<Task> findByUserIdAndPending(Long userId);
     List<Task> findAll();
     void markDeleted(Long id);
+
     void clear();
+
+
 } 
